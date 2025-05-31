@@ -36,7 +36,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CountLowercaseLettersItem.cs" />
+    <Compile Include="MenuUtils.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ShowCurrentDate.cs" />
+    <Compile Include="ShowCurrentTime.cs" />
+    <Compile Include="ShowVersionItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ex04.Menus. Interfaces\Ex04.Menus. Interfaces.csproj">

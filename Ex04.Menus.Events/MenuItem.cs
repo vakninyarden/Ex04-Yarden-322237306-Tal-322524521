@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Ex04.Menus.Interfaces
+namespace Ex04.Menus.Events
 {
     public class MenuItem
     {
         private string m_ItemTitle;
-        public bool m_IsRootMenu; 
+        public bool m_IsRootMenu;
         private readonly List<MenuItem> m_SubItems = new List<MenuItem>();
-        private IMenuExecutable m_MenuAction = null;
+        public event Action OnMenuItemSelected;
+        public MenuItem(string i_ItemTitle, Action i_Action)
+        {
+            m_ItemTitle = i_ItemTitle;
+            OnMenuItemSelected += i_Action;
+        }
 
         public MenuItem(string i_ItemTitle)
         {
@@ -24,12 +32,6 @@ namespace Ex04.Menus.Interfaces
         {
             get { return m_IsRootMenu; }
             set { m_IsRootMenu = value; }
-        }
-
-        public IMenuExecutable MenuAction
-        {
-            get { return m_MenuAction; }
-            set { m_MenuAction = value; }
         }
 
         public void AddSubItem(MenuItem i_Item)
@@ -72,7 +74,7 @@ namespace Ex04.Menus.Interfaces
                     }
                     else if (userChoice >= 1 && userChoice <= m_SubItems.Count)
                     {
-                        m_SubItems[userChoice - 1].OnChosenItem(); 
+                        m_SubItems[userChoice - 1].OnChosenItem();
                     }
                     else
                     {
@@ -94,10 +96,10 @@ namespace Ex04.Menus.Interfaces
             {
                 runSubMenuLoop();
             }
-            else if (m_MenuAction != null)
+            else if (OnMenuItemSelected != null)
             {
                 Console.Clear();
-                m_MenuAction.PerformItem();
+                OnMenuItemSelected.Invoke();
                 Console.WriteLine();
                 Console.WriteLine("Press Enter to return...");
                 Console.ReadLine();
